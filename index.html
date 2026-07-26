@@ -713,7 +713,7 @@
   window.addEventListener('load', sizeSpine);
   window.addEventListener('resize', sizeSpine);
 
-    // 2. ИНТРО СЕКВЕНЦИЯ + МУЗЫКА (как в prot.html)
+  // 2. ИНТРО СЕКВЕНЦИЯ + МУЗЫКА (с исправлением для мобильных устройств)
   (function introSequence(){
     const envelope = document.getElementById('envelopeOverlay');
     const videoOverlay = document.getElementById('videoOverlay');
@@ -724,25 +724,36 @@
     let introStarted = false;
     let introFadeDone = false;
 
+    // Функция для показа кнопки управления музыкой
     function showAudioButton(){
       audioBtn.classList.add('visible');
     }
 
+    // Функция, которая запускает всё "шоу" по клику
     function startIntro(){
       if(introStarted) return;
       introStarted = true;
 
+      // 1. Прячем конверт
       envelope.style.opacity = '0';
       setTimeout(function(){ envelope.style.display = 'none'; }, 1400);
 
+      // 2. Показываем видео
       videoOverlay.style.opacity = '1';
       videoOverlay.style.pointerEvents = 'all';
-
       introVideo.play().catch(function(){});
 
-      // Запускаем музыку
+      // 3. ПЫТАЕМСЯ ЗАПУСТИТЬ МУЗЫКУ ПОСЛЕ КЛИКА ПО КОНВЕРТУ
+      // Это обходит политику автозапуска!
       audio.volume = 0.7;
-      audio.play().catch(function(){});
+      audio.play().then(() => {
+        // Если музыка запустилась успешно, показываем кнопку управления
+        console.log('Music started successfully after user gesture.');
+      }).catch(error => {
+        // Если музыку всё равно заблокировали, просто логируем ошибку.
+        // Браузер может не разрешить запуск, если клик был не по "чистому" HTML-элементу.
+        console.warn('Music autoplay was prevented even after user gesture:', error);
+      });
     }
 
     function fadeOutVideo(){
