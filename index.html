@@ -642,8 +642,7 @@
     <h2 class="stitle">Подтвердите присутствие</h2>
     <div class="sdivider"></div>
 
-    <form class="rsvp-form" id="rsvpForm" action="https://api.web3forms.com/submit" method="POST">
-    <input type="hidden" name="access_key" value="c2ecb68b-8cd5-4be4-a8c7-fa55e9c93733">
+    <form class="rsvp-form" id="rsvpForm">
       <div class="field">
         <label for="rname">Ваше имя</label>
         <input type="text" id="rname" placeholder="Как к вам обращаться" required>
@@ -827,31 +826,29 @@
     const timer = setInterval(update, 1000);
   })();
 
-  // 4. RSVP ФОРМА
-  document.getElementById('rsvpForm').addEventListener('submit', async function(e) {
-    e.preventDefault(); // Отменяем обычную отправку
+  // 4. RSVP ФОРМА с отправкой в Google Таблицу
+  document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+    e.preventDefault();
 
     const form = this;
     const formData = new FormData(form);
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbwFQ5nbAQ_CVWOn24btTqx2HUfeq0QOGEa4MQtRGGs2TQF3MGOemTwdaBv7nglg0ApnFQ/exec'; // ЗАМЕНИТЕ ЭТО!
 
-    try {
-        const response = await fetch(form.action, {
-            method: form.method,
-            body: formData,
-            headers: {
-                'Accept': 'application/json'
-            }
-        });
-
-        if (response.ok) {
-            form.style.display = 'none';
-            document.getElementById('rsvpSuccess').style.display = 'block';
+    fetch(scriptURL, { method: 'POST', body: formData })
+      .then(response => response.json())
+      .then(data => {
+        if (data.result === 'success') {
+          form.style.display = 'none';
+          document.getElementById('rsvpSuccess').style.display = 'block';
         } else {
-            alert('Произошла ошибка, попробуйте ещё раз или напишите нам лично.');
+          alert('Произошла ошибка при отправке. Пожалуйста, попробуйте ещё раз.');
+          console.error('Ошибка от Apps Script:', data);
         }
-    } catch (error) {
-        alert('Ошибка соединения, проверьте интернет или напишите нам.');
-    }
+      })
+      .catch(error => {
+        alert('Не удалось отправить данные. Проверьте интернет-соединение.');
+        console.error('Ошибка отправки fetch:', error);
+      });
   });
 </script>
 
