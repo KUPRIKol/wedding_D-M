@@ -645,7 +645,7 @@
     <form class="rsvp-form" id="rsvpForm">
       <div class="field">
         <label for="rname">Ваше имя</label>
-        <input type="text" id="rname" placeholder="Как к вам обращаться" required>
+        <input type="text" id="rname" name="rname" placeholder="Как к вам обращаться" required>
       </div>
 
       <div class="field">
@@ -658,17 +658,17 @@
 
       <div class="field">
         <label for="rguests">Количество гостей (с вами)</label>
-        <input type="text" id="rguests" placeholder="Например, 2">
+        <input type="text" id="rguests" name="rguests" placeholder="Например, 2">
       </div>
 
       <div class="field">
         <label for="rdiet">Пожелания по меню / аллергии</label>
-        <textarea id="rdiet" placeholder="Вегетарианское меню, аллергия на орехи и т.д."></textarea>
+        <textarea id="rdiet" name="rdiet" placeholder="Вегетарианское меню, аллергия на орехи и т.д."></textarea>
       </div>
 
       <div class="field">
         <label for="rmsg">Комментарий</label>
-        <textarea id="rmsg" placeholder="Что-то, что нам стоит знать?"></textarea>
+        <textarea id="rmsg" name="rsmsg" placeholder="Что-то, что нам стоит знать?"></textarea>
       </div>
 
       <button type="submit" class="submit-btn">Отправить</button>
