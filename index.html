@@ -67,9 +67,6 @@
             transform:translateX(-50%);
             z-index:0;
         }
-        @media (max-width: 780px){
-            .spine{ left:28px; }
-        }
         
         .seal{
             position:relative;
@@ -483,6 +480,17 @@
         #audioBtn.visible{
             visibility:visible;
             opacity:1;
+        }
+        /* ---------- фикс для линии на всех экранах ---------- */
+        @media (max-width: 780px){
+            .tl-item{
+                grid-template-columns: 80px 26px 1fr;
+                gap: 0 12px;
+            }
+            .spine{
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+            }
         }
     </style>
 </head>
