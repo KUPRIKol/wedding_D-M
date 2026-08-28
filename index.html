@@ -57,7 +57,7 @@
             z-index:0;
         }
 
-        /* ---------- vine spine ---------- */
+         /* ---------- vine spine ---------- */
         .spine{
             position:absolute;
             left:50%;
@@ -70,7 +70,7 @@
         @media (max-width: 780px){
             .spine{ left:28px; }
         }
-
+        
         .seal{
             position:relative;
             z-index:2;
@@ -214,22 +214,30 @@
             padding-top:2px;
         }
         .tl-dot-col{
-            display:flex; flex-direction:column; align-items:center;
+            display:flex; 
+            flex-direction:column; 
+            align-items:center;
             height:100%;
+            position: relative;
         }
         .tl-dot{
-            width:12px; height:12px;
+            width:12px; 
+            height:12px;
             border-radius:50%;
             background:var(--sage);
             border:2px solid var(--cream);
             box-shadow:0 0 0 1.5px var(--sage);
             margin-top:6px;
+            flex-shrink: 0;
+            z-index: 2;
         }
         .tl-line{
             width:1.5px;
             flex:1;
             background:var(--line);
             margin-top:4px;
+            position: relative;
+            z-index: 1;
         }
         .tl-item:last-child .tl-line{ display:none; }
         .tl-content{
